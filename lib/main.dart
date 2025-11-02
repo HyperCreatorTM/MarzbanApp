@@ -3,7 +3,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'login_page.dart';
 import 'home_page.dart';
 
-// BU KODUN ÇALIŞMASI İÇİN "flutter_secure_storage" PAKETİ GEREKLİ
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
