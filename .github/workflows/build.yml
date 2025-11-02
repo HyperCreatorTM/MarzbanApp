@@ -24,7 +24,7 @@ jobs:
         uses: actions/setup-java@v4 # En güncel setup-java action versiyonu
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: '17'
 
       # 3. Adım: Flutter SDK'sını kur
       - name: Set up Flutter
