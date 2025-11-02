@@ -37,8 +37,8 @@ jobs:
         run: flutter pub get
 
       # 5. Adım: Flutter Launcher Icons'ı çalıştır (ikonları oluştur)
-      - name: Generate Launcher Icons
-        run: dart run flutter_launcher_icons
+    #  - name: Generate Launcher Icons
+      #  run: dart run flutter_launcher_icons
 
       # 6. Adım: Android için APK'yı derle (Release modu)
       - name: Build APK (Release Mode)
