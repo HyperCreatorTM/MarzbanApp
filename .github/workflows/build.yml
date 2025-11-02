@@ -1,0 +1,52 @@
+# GitHub Actions Workflow for Flutter APK Build
+
+name: Build Flutter APK
+
+on:
+  push:
+    branches:
+      - main # Bu branch adı senin ana branch'in olmalı (genellikle main veya master)
+  pull_request:
+    branches:
+      - main # Bu branch adı senin ana branch'in olmalı
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # En son Ubuntu Linux sunucusunda çalıştır
+
+    steps:
+      # 1. Adım: Deponu kopyala
+      - name: Checkout Repository
+        uses: actions/checkout@v4 # En güncel checkout action versiyonu
+
+      # 2. Adım: Java JDK 11'i kur (Android Gradle için gerekli)
+      - name: Set up Java 11
+        uses: actions/setup-java@v4 # En güncel setup-java action versiyonu
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      # 3. Adım: Flutter SDK'sını kur
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2 # Bu action henüz v3'e geçmedi
+        with:
+          channel: 'stable' # En stabil Flutter kanalını kullan
+
+      # 4. Adım: Flutter paketlerini yükle (flutter pub get)
+      - name: Install Dependencies
+        run: flutter pub get
+
+      # 5. Adım: Flutter Launcher Icons'ı çalıştır (ikonları oluştur)
+      - name: Generate Launcher Icons
+        run: dart run flutter_launcher_icons
+
+      # 6. Adım: Android için APK'yı derle (Release modu)
+      - name: Build APK (Release Mode)
+        run: flutter build apk --release
+
+      # 7. Adım: Derlenmiş APK'yı Artifact olarak yükle (GitHub'dan indirebilmen için)
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4 # ARTIK KESİNLİKLE V4 KULLANIYORUZ
+        with:
+          name: app-release.apk # İndireceğin dosyanın adı
+          path: build/app/outputs/flutter-apk/app-release.apk # APK'nın yolu
